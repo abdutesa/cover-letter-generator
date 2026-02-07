@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cover Letter Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1e40af;
+        }
+        #letterPreview {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Cover Letter Generator</h1>
+
+    <label for="name">Your Name</label>
+    <input type="text" id="name" placeholder="John Doe">
+
+    <label for="jobTitle">Job Title</label>
+    <input type="text" id="jobTitle" placeholder="Software Developer">
+
+    <label for="skills">Skills / Experience (comma separated)</label>
+    <textarea id="skills" rows="4" placeholder="JavaScript, HTML, CSS"></textarea>
+
+    <label for="extra">Additional Notes (optional)</label>
+    <textarea id="extra" rows="3" placeholder="Extra information"></textarea>
+
+    <button id="generateBtn">Generate Cover Letter</button>
+    <button id="downloadBtn">Download PDF</button>
+
+    <div id="letterPreview"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+const generateBtn = document.getElementById("generateBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const letterPreview = document.getElementById("letterPreview");
+
+generateBtn.addEventListener("click", () => {
+    const name = document.getElementById("name").value;
+    const jobTitle = document.getElementById("jobTitle").value;
+    const skills = document.getElementById("skills").value;
+    const extra = document.getElementById("extra").value;
+
+    const letter = `Dear Hiring Manager,
+
+My name is ${name}, and I am very interested in the ${jobTitle} position.
+
+I have experience and skills in: ${skills}.
+
+${extra ? extra + "\n" : ""}I would love the opportunity to contribute to your team.
+
+Sincerely,
+${name}`;
+
+    letterPreview.textContent = letter;
+});
+
+downloadBtn.addEventListener("click", () => {
+    const doc = new jsPDF();
+    doc.text(letterPreview.textContent, 10, 10);
+    doc.save("CoverLetter.pdf");
+});
+</script>
+</body>
+</html>
